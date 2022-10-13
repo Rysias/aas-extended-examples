@@ -10,7 +10,11 @@ def main() -> None:
     # Create a copy in each directory with "JHR" appended
     for notebook in notebooks:
         new_name = notebook.with_name(notebook.stem + "-JHR" + notebook.suffix)
+
+        # If notebook was modified after the last copy, copy it
         if not new_name.exists():
+            shutil.copy(notebook, new_name)
+        elif notebook.stat().st_mtime > new_name.stat().st_mtime:
             shutil.copy(notebook, new_name)
 
 
