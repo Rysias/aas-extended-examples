@@ -15,6 +15,10 @@ def main() -> None:
         if not new_name.exists():
             shutil.copy(notebook, new_name)
         elif notebook.stat().st_mtime > new_name.stat().st_mtime:
+            backup_name = notebook.with_name(
+                notebook.stem + "-JHR-BACKUP" + notebook.suffix
+            )
+            shutil.copy(new_name, backup_name)
             shutil.copy(notebook, new_name)
 
 
