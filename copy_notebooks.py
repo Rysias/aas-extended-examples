@@ -18,7 +18,8 @@ def main() -> None:
             backup_name = notebook.with_name(
                 notebook.stem + "-JHR-BACKUP" + notebook.suffix
             )
-            shutil.copy(new_name, backup_name)
+            if not backup_name.exists():
+                shutil.copy(notebook, backup_name)
             shutil.copy(notebook, new_name)
 
 
